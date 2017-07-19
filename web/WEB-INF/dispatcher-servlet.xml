@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <mvc:annotation-driven></mvc:annotation-driven>
+    <context:component-scan base-package="by"></context:component-scan>
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/view/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+    <context:annotation-config></context:annotation-config>
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+    <mvc:resources mapping="/image/**" location="/image/"/>
+    <bean id="dataSourse" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+        <property name="url" value="jdbc:mysql://localhost:3306/employee_department"></property>
+        <property name="username" value="root"></property>
+        <property name="password" value="root"></property>
+    </bean>
+
+    <bean id="hibernate4AnnotatedSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSourse"></property>
+        <property name="annotatedClasses">
+            <list>
+                <value>by.model.Employee</value>
+                <value>by.model.Department</value>
+                <value>by.model.Message</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="dataSourse2" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+        <property name="url" value="jdbc:mysql://localhost:3306/spring_security"></property>
+        <property name="username" value="root"></property>
+        <property name="password" value="root"></property>
+    </bean>
+    <bean id="hibernate4AnnotatedSessionFactory2" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSourse2"></property>
+        <property name="annotatedClasses">
+            <list>
+               <value>by.modelSecurity.RolesEntity</value>
+               <value>by.modelSecurity.UsersEntity</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="daoForDerpartment" class="by.DAO.DAOForDerpartment">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"></property>
+    </bean>
+    <bean id="daoRole" class="by.DAO.DAORole">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory2"/>
+    </bean>
+    <bean id="daoUser" class="by.DAO.DAOUser">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory2"/>
+    </bean>
+    <bean id="serviceRole" class="by.service.ServiceRole">
+        <property name="role" ref="daoRole"/>
+    </bean>
+    <bean id="serviceUser" class="by.service.ServiceUser">
+        <property name="user" ref="daoUser"/>
+    </bean>
+    <bean id="daoForEmployee" class="by.DAO.DAOForEmployee">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
+    </bean>
+    <bean id="daoForMessage" class="by.DAO.DAOForMessage">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
+    </bean>
+    <bean id="serviceForMessage" class="by.service.ServiceForMessage">
+        <property name="daoForMessage" ref="daoForMessage"/>
+    </bean>
+    <bean id="serviceForDepartment"  class="by.service.ServiceForDepartment" >
+        <property name="daoForDepartment" ref="daoForDerpartment"></property>
+    </bean>
+    <bean id="serviceForEmployee" class="by.service.ServiceForEmployee">
+        <property name="daoForEmployee" ref="daoForEmployee"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"></property>
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+    <mvc:default-servlet-handler></mvc:default-servlet-handler>
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!--<property name="maxUploadSize" value="100000"/>-->
+    </bean>
+</beans>

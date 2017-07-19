@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="employee_department@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.2">
+    <root id="1"/>
+    <schema id="2" parent="1" name="employee_department">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="department_employee"/>
+    <schema id="4" parent="1" name="information_schema"/>
+    <schema id="5" parent="1" name="manytomanyone"/>
+    <schema id="6" parent="1" name="mysql"/>
+    <schema id="7" parent="1" name="performance_schema"/>
+    <schema id="8" parent="1" name="sakila"/>
+    <schema id="9" parent="1" name="sys"/>
+    <schema id="10" parent="1" name="test"/>
+    <schema id="11" parent="1" name="world"/>
+    <schema id="12" parent="1" name="employee_image"/>
+    <schema id="13" parent="1" name="my_project"/>
+    <table id="14" parent="2" name="department"/>
+    <table id="15" parent="2" name="employee"/>
+    <table id="16" parent="2" name="employee_message"/>
+    <table id="17" parent="2" name="imagedownloadexample"/>
+    <table id="18" parent="2" name="message"/>
+    <column id="19" parent="14" name="id_department">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="20" parent="14" name="name_department">
+      <Position>2</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <key id="21" parent="14" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id_department</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="22" parent="15" name="id_employee">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="23" parent="15" name="name_employee">
+      <Position>2</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="24" parent="15" name="photo">
+      <Position>3</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="25" parent="15" name="photo_employee">
+      <Position>4</Position>
+      <DataType>longblob|0</DataType>
+    </column>
+    <column id="26" parent="15" name="id_department">
+      <Position>5</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="27" parent="15" name="FK_cq6ymgw20o8echtunqhlbe2us">
+      <ColNames>id_department</ColNames>
+    </index>
+    <key id="28" parent="15" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id_employee</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="29" parent="15" name="FK_cq6ymgw20o8echtunqhlbe2us">
+      <ColNames>id_department</ColNames>
+      <RefSchemaName>employee_department</RefSchemaName>
+      <RefTableName>department</RefTableName>
+      <RefColNames>id_department</RefColNames>
+    </foreign-key>
+    <column id="30" parent="16" name="id_employee">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="31" parent="16" name="id_message">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="32" parent="16" name="FK_gtrt5p7t01srqsmxvmbygq5ge">
+      <ColNames>id_message</ColNames>
+    </index>
+    <key id="33" parent="16" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id_employee
+id_message</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="34" parent="16" name="FK_557jmvi7hb8rl4qxycsvp3cxf">
+      <ColNames>id_employee</ColNames>
+      <RefSchemaName>employee_department</RefSchemaName>
+      <RefTableName>employee</RefTableName>
+      <RefColNames>id_employee</RefColNames>
+    </foreign-key>
+    <foreign-key id="35" parent="16" name="FK_gtrt5p7t01srqsmxvmbygq5ge">
+      <ColNames>id_message</ColNames>
+      <RefSchemaName>employee_department</RefSchemaName>
+      <RefTableName>message</RefTableName>
+      <RefColNames>id_message</RefColNames>
+    </foreign-key>
+    <column id="36" parent="17" name="id_image">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="37" parent="17" name="file">
+      <Position>2</Position>
+      <DataType>longblob|0</DataType>
+    </column>
+    <key id="38" parent="17" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id_image</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="39" parent="18" name="id_message">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="40" parent="18" name="value_message">
+      <Position>2</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <key id="41" parent="18" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id_message</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>
